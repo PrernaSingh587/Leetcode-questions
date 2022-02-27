@@ -29,11 +29,11 @@ public:
                 top++;
                 //cout<<l<<" ";
                 if(j->left) {
-                    q.push({j->left,(ll)2*l-1});
+                    q.push({j->left,(ll)2*l+1});
                     
                 } 
                 if(j->right) {
-                    q.push({j->right,(ll)2*l});
+                    q.push({j->right,(ll)2*l+2});
                     
                 } 
             }
