@@ -11,21 +11,18 @@ public:
 
 class Solution {
 public:
+    int find(Node* p, Node * q) {
+        if(!p) return 0;
+        if(p==q) return 1;
+         int l=find(p->left,q);
+        if(l==1) return 1;
+        int r=find(p->right,q);
+        return r;
+    }
+    
     Node* lowestCommonAncestor(Node* p, Node * q) {
-       queue<Node*>qt;
-        unordered_set<Node*>st;
-        qt.push(p);
-        while(!qt.empty()) {
-            Node *x=qt.front(); qt.pop();
-            st.insert(x);
-              if(x->parent) qt.push(x->parent);
-        }
-        qt.push(q);
-        while(!qt.empty()) {
-            Node *x=qt.front(); qt.pop();
-            if(st.find(x)!=st.end()) return x;
-            if(x->parent) qt.push(x->parent);
-        }
-        return NULL;
+       if(find(p,q)) return p;
+        if(find(q,p)) return q;
+        return lowestCommonAncestor(p->parent,q->parent);
     }
 };
