@@ -22,11 +22,6 @@ public:
             ans=root;
             return 0;
         }
-        if(l==0 && r==0) {
-            if(st.find(root)!=st.end()) {
-                return 1;
-            } return 0;
-        }
         if(st.find(root)!=st.end()) {
              if(r+l+1==num) {
                     ans=root;
