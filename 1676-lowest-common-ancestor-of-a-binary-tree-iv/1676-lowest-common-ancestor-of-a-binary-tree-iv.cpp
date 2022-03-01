@@ -27,22 +27,6 @@ public:
                 return 1;
             } return 0;
         }
-        if(l==0) {
-            if(st.find(root)!=st.end()) {
-                if(r+l+1==num) {
-                    ans=root;
-                    return 0;
-                } else return 1+r;
-            } else return r; 
-        }
-        if(r==0) {
-            if(st.find(root)!=st.end()) {
-                if(r+l+1==num) {
-                    ans=root;
-                    return 0;
-                } else return 1+l;
-            } else return l; 
-        }
         if(st.find(root)!=st.end()) {
              if(r+l+1==num) {
                     ans=root;
