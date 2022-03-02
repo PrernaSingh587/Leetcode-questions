@@ -13,36 +13,13 @@ class Solution {
 public:
     int maxi=0;
     vector<int>solve(TreeNode* root) {
-        if(!root) return {INT_MIN,INT_MIN,INT_MIN,1};
+        if(!root) return {INT_MAX,INT_MIN,0};
         vector<int>l=solve(root->left),r=solve(root->right);
         int x=root->val;
-        if(l[3]==0 || r[3]==0) return {INT_MIN,INT_MIN,INT_MIN,0};
-        cout<<x<<" ";
-        if(l[2]==INT_MIN && r[2]==INT_MIN) {
-            maxi=max(maxi,root->val);
-            return {root->val,root->val,root->val,1};
-        }
-        if(l[2]!=INT_MIN && r[2]!=INT_MIN) {
-            if(x>l[1] && x<r[0]) {
-                maxi=max(maxi,l[2]+r[2]+x);
-                return {l[0],r[1],l[2]+r[2]+x,1};
-            } else {
-                return {INT_MIN,INT_MIN,INT_MIN,0};
-            }
-        }
-        if(l[2]==INT_MIN) {
-            if(x<r[0]) {
-                maxi=max(maxi,r[2]+x);
-                return {x,r[1],r[2]+x,1};
-            } else return {INT_MIN,INT_MIN,-1,0};
-        }
-        if(r[2]==INT_MIN) {
-            if(x>l[1]) {
-                maxi=max(maxi,l[2]+x);
-                return {l[0],x,l[2]+x,1};
-            } else return {INT_MIN,INT_MIN,-1,0};
-        }
-        return {};
+        if(l.size()==0 || r.size()==0 || x>=r[0] || x<=l[1]) return {};
+        int sum=x+l[2]+r[2];
+        maxi=max(maxi,sum);
+        return {min(x,l[0]),max(x,r[1]),sum};
         
     }
     int maxSumBST(TreeNode* root) {
