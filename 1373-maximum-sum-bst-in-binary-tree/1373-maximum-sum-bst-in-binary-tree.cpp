@@ -17,7 +17,7 @@ public:
         vector<int>l=solve(root->left),r=solve(root->right);
         int x=root->val;
         if(l[3]==0 || r[3]==0) return {INT_MIN,INT_MIN,INT_MIN,0};
-        //cout<<x<<" ";
+        cout<<x<<" ";
         if(l[2]==INT_MIN && r[2]==INT_MIN) {
             maxi=max(maxi,root->val);
             return {root->val,root->val,root->val,1};
