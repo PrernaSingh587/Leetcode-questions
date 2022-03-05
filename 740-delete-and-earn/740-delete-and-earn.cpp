@@ -1,16 +1,14 @@
 class Solution {
 public:
-   
+    unordered_map<int,int>mp,cache;
+    int solve(int maxi) {
+        if(maxi<=0) return 0;
+        if(cache.count(maxi)) return cache[maxi];
+        return cache[maxi]=max(mp[maxi]+solve(maxi-2),solve(maxi-1));
+    }
     int deleteAndEarn(vector<int>& nums) {
-        int sum[20001]={0};
-        int dp[20001]={0};
-        for(int i : nums) sum[i]+=i;
-        dp[0]=0;
-        dp[1]=sum[0];
-        for(int i=2;i<20001;i++) {
-            dp[i]=max(sum[i-1]+dp[i-2],dp[i-1]);
-            //cout<<dp[i]<<" ";
-        }
-        return dp[20000];
+        int maxi=0;
+        for(int i : nums) {mp[i]+=i; maxi=max(maxi,i); }
+        return solve(maxi);
     }
 };
