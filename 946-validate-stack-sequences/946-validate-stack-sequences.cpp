@@ -14,12 +14,12 @@ public:
             t1++;
             
         }
-        while(t2<n) {
-            if(!st.empty() && st.top()==pp[t2]) {
-                st.pop();
-                t2++;
-            } else return 0;
-        }
-        return t2==n;
+        // while(t2<n) {
+        //     if(!st.empty() && st.top()==pp[t2]) {
+        //         st.pop();
+        //         t2++;
+        //     } else return 0;
+        // }
+       return t2==n;
     }
 };
