@@ -21,7 +21,7 @@ public:
            // cout<<x<<" "<<y<<endl;
             if(con[y]<x) continue;
             if(y==n-1) {
-                ans+=par[y]; continue;
+                return ans+=par[y]; continue;
             }
             for(pp d : adj[y]) {
                 if((d.second+x)<con[d.first]) {
