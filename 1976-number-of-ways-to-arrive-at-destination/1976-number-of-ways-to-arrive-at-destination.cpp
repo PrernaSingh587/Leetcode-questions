@@ -20,7 +20,9 @@ public:
             long long int x=k.first,y=k.second;
            // cout<<x<<" "<<y<<endl;
             if(con[y]<x) continue;
-            
+            if(y==n-1) {
+                ans+=par[y]; continue;
+            }
             for(pp d : adj[y]) {
                 if((d.second+x)<con[d.first]) {
                     con[d.first]=(d.second+x);
@@ -31,6 +33,6 @@ public:
                 }
             }
         }
-        return par[n-1];
+        return ans;
     }
 };
