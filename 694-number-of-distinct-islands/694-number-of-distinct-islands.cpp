@@ -42,7 +42,7 @@ public:
                             }
                         }
                     }
-                    cout<<h<<" ";
+                   // cout<<h<<" ";
                     st.insert(h);
                 }
             }
