@@ -20,7 +20,7 @@ public:
                 }
                 h++;
             }
-            cout<<num<<endl;
+           // cout<<num<<endl;
             if(num>=m) {
                 maxi=mj;
                 r=mj-1;
