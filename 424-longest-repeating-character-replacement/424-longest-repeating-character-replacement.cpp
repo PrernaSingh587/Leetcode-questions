@@ -7,7 +7,7 @@ public:
             dp[s[i]]++;
             m=max(m,dp[s[i]]);
             tot+=1;
-            while(tot-m>k) {
+            if(tot-m>k) {
                 dp[s[top]]--;
                 top++;
                 tot--;
