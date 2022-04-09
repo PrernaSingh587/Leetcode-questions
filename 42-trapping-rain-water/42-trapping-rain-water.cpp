@@ -13,7 +13,7 @@ public:
             right[i]=max(right[i+1],h[i]);
         }
         int ans=0;
-        for(int i=1;i<n-1;i++) {
+        for(int i=0;i<n;i++) {
             ans+=(min(left[i],right[i])-h[i]);
         }
         return ans;
