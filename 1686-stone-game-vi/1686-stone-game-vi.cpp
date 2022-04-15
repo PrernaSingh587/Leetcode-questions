@@ -1,20 +1,27 @@
 class Solution {
 public:
-
-    int stoneGameVI(vector<int>& av, vector<int>& bv) {
-        priority_queue<pair<int,int>>q;
-        for(int i=0;i<av.size();i++) {
-            q.push({av[i]+bv[i],i});
+    int stoneGameVI(vector<int>& a, vector<int>& b) {
+        int n=a.size();
+        vector<vector<int>>ind(201);
+        for(int i=0;i<n;i++) {
+            ind[a[i]+b[i]].push_back(i);
         }
-        int f=1,ta=0,tb=0;
-        while(!q.empty()) {
-            auto k=q.top(); q.pop();
-            int x=k.first,y=k.second;
-            if(f) ta+=av[y];
-            else tb+=bv[y];
-            f=!f;
+        
+        int ta=0,tb=0,turn=0;
+        for(int i=200;i>=1;i--) {
+           
+            for(int k=0;k<ind[i].size();k++) {
+                 cout<<i<<" ";
+                if(turn==0) {
+                    ta+=a[ind[i][k]];
+                } else tb+=b[ind[i][k]];
+                turn^=1;
+                
+            }
         }
+        cout<<ta<<" "<<tb;
         if(ta==tb) return 0;
-        return ta<tb?-1:1;
+        if(ta>tb) return 1;
+        return -1;
     }
 };
