@@ -17,7 +17,7 @@ public:
         int sum=0;
         for(int i: p) sum+=i;
         int h=solve(p,0,1);
-        cout<<h<<" ";
+       // cout<<h<<" ";
         return (h+sum)/2;
     }
 };
