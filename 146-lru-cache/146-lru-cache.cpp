@@ -1,65 +1,65 @@
 class LRUCache {
 public:
-    class node{
-        public:
-            int key;
-            int val;
-            node* prev;
-            node* next;
-            node(int key, int val){
-                this->key = key;
-                this->val = val;
-            }
-    };
-    
-    node* head = new node(-1,-1);
-    node* tail = new node(-1,-1);
-    int capacity;
-    unordered_map<int,node*> map;
-    
+    struct node {
+        int key,val;
+        node *next,*prev;
+        node (int k,int v) {
+            key=k;
+            val=v;
+            next=NULL;
+            prev=NULL;
+        }
+    }*tail,*head;
+    int cap;
+    unordered_map<int,node*>mp;
     LRUCache(int capacity) {
-        this->capacity = capacity;
-        head->next = tail;
-        tail->prev = head;
+        cap=capacity;
+        tail=new node(-1,-1);
+        head=new node(-1,-1);
+        tail->prev=head;
+        head->next=tail;
     }
     
-    void deleteNode(node* curNode){
-        node* prevNode = curNode->prev;
-        node* nextNode = curNode->next;
-        prevNode->next = nextNode;
-        nextNode->prev = prevNode;
+    void add(node *newnode) {
+        node *nextnode=head->next;
+        newnode->next=nextnode;
+        nextnode->prev=newnode;
+        head->next=newnode;
+        newnode->prev=head;
     }
     
-    void addNode(node* curNode){
-        curNode->next = head->next;
-        curNode->prev = head;
-        curNode->next->prev = curNode;
-        head->next = curNode;
+    void delete_(node *newnode) {
+        //cout<<newnode->val<<".\n";
+        node *prevnode=newnode->prev;
+        prevnode->next=newnode->next;
+        newnode->next->prev=prevnode;
     }
     
     int get(int key) {
-        if(map.find(key) == map.end()) return -1;
-        node* curNode = map[key];
-        int result = curNode->val;
-        map.erase(key);
-        deleteNode(curNode);
-        addNode(curNode);
-        map[key] = head->next;
-        return result;
+        //cout<<key<<"\n";
+        if(mp.count(key)==0) return -1;
+        node *k= mp[key];
+        mp.erase(key);
+        delete_(k);
+        add(k);
+        mp[key]=head->next;
+        return k->val;
     }
     
-    void put(int key, int value) {
-        if(map.find(key) != map.end()){
-            node* curNode = map[key];
-            map.erase(key);
-            deleteNode(curNode);
+    void put(int key, int val) {
+       // cout<<key<<" "<<val<<endl; 
+        if(mp.count(key)) {
+            delete_(mp[key]);
+            mp.erase(key);
         }
-        if(map.size() == capacity){
-            map.erase(tail->prev->key);
-            deleteNode(tail->prev);
+        if(mp.size()==cap) {
+            mp.erase(tail->prev->key);
+            delete_(tail->prev);
+           
         }
-        addNode(new node(key,value));
-        map[key] = head->next;
+        add(new node(key,val));
+        mp[key]=head->next;
+        return;
     }
 };
 
