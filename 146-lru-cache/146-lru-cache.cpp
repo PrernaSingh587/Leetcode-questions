@@ -46,19 +46,35 @@ public:
     }
     
     void put(int key, int val) {
-       // cout<<key<<" "<<val<<endl; 
-        if(mp.count(key)) {
-            delete_(mp[key]);
-            mp.erase(key);
-        }
+       if(mp.count(key)) {
+         node*k = mp[key];
+    int h=k->val;
+    node*pre=k->prev;
+    node*nex=k->next;
+    pre->next=nex;
+    nex->prev=pre;
+    k->next=head->next;
+     k->next->prev=k;
+    head->next=k;
+    k->prev=head;
+    k->val=val;
+    mp[key]=k;
+    return;
+    } else {
         if(mp.size()==cap) {
+            node *kl=tail->prev->prev;
             mp.erase(tail->prev->key);
-            delete_(tail->prev);
-           
+            tail->prev=kl;
+            kl->next=tail;
         }
-        add(new node(key,val));
-        mp[key]=head->next;
-        return;
+        node *newnode = new node(key,val);
+        mp[key]=newnode;
+        newnode->next=head->next;
+        newnode->next->prev=newnode;
+        newnode->prev=head;
+        head->next=newnode;
+    }
+        return ;
     }
 };
 
