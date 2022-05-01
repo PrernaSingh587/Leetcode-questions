@@ -36,13 +36,20 @@ public:
     }
     
     int get(int key) {
-        //cout<<key<<"\n";
-        if(mp.count(key)==0) return -1;
-        node *k= mp[key];
-        delete_(k);
-        add(k);
+         if(mp.count(key)==0) return -1;
+    node*k = mp[key];
+    int h=k->val;
+    node*pre=k->prev;
+    node*nex=k->next;
+    pre->next=nex;
+    nex->prev=pre;
+    k->next=head->next;
+    k->next->prev=k;
+    head->next=k;
+    k->prev=head;
+    return h;
        
-        return k->val;
+        
     }
     
     void put(int key, int val) {
