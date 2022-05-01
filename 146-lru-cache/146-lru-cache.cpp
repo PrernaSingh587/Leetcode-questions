@@ -39,10 +39,9 @@ public:
         //cout<<key<<"\n";
         if(mp.count(key)==0) return -1;
         node *k= mp[key];
-        mp.erase(key);
         delete_(k);
         add(k);
-        mp[key]=head->next;
+       
         return k->val;
     }
     
