@@ -11,27 +11,19 @@
  */
 class Solution {
 public:
-    int ans=0;
-    void solve(TreeNode*root, int k) {
-        if(!root) {
-            ans+=k;
-            return;
-        }
+    int sum=0;
+    void solve(TreeNode *root, int k) {
+        if(!root) return ;
         k=k*10+root->val;
-        if(root->left==NULL) {
-            solve(root->right,k);
-            return;
-        } else if(root->right==NULL) {
-             solve(root->left,k);
+        if(!root->left && !root->right) {
+            sum+=k;
             return ;
-        } 
-         
+        }
         solve(root->left,k);
         solve(root->right,k);
     }
     int sumNumbers(TreeNode* root) {
         solve(root,0);
-        
-        return ans;
+        return sum;  
     }
 };
