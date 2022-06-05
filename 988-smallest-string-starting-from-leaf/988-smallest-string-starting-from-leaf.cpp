@@ -13,20 +13,19 @@ class Solution {
 public:
     void solve(TreeNode*root, string &ans,string st) {
         if(!root) return;
+        char c = (root->val+'a');
+            string g = c+st;
         if(!root->left && !root->right) {
-            st+=(root->val+'a');
-            string g=st;
-            reverse(g.begin(),g.end());
             if(ans=="") ans=g;
             else {
                 if(ans>g) ans=g; 
             }
             return ;
         }
-        st+=(root->val+'a');
-        solve(root->left,ans,st);
+       
+        solve(root->left,ans,g);
         
-        solve(root->right,ans,st);
+        solve(root->right,ans,g);
     }
     string smallestFromLeaf(TreeNode* root) {
         string st="";
