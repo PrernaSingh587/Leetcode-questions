@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-    string m="";
-    int f=0;
-    void solve(TreeNode *root, string h) {
-        if(!root) return ;
+    void solve(TreeNode*root, string &ans,string st) {
+        if(!root) return;
         if(!root->left && !root->right) {
-            h+=root->val+'a';
-            string x=h;
-            reverse(x.begin(),x.end());
-            if(f==0) {
-                f=1; m=x; return ;
+            st+=(root->val+'a');
+            string g=st;
+            reverse(g.begin(),g.end());
+            if(ans=="") ans=g;
+            else {
+                if(ans>g) ans=g; 
             }
-            if(m>x) m=x;
-            return;
+            return ;
         }
-        h+=root->val+'a';
-        solve(root->left,h);
-        solve(root->right,h);
+        st+=(root->val+'a');
+        solve(root->left,ans,st);
+        
+        solve(root->right,ans,st);
     }
     string smallestFromLeaf(TreeNode* root) {
-        solve(root,"");
-        return m;
+        string st="";
+        solve(root,st,"");
+        return st;
     }
 };
