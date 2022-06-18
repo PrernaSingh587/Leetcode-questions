@@ -1,27 +1,22 @@
 class Solution {
 public:
-    vector<string>v;
-    void p(string h,int op,int cl,int n) {
-        
-        if(op==cl && cl==n) {
-            v.push_back(h);
-            cout<<h<<" ";
+    vector<string>ans;
+    void solve(int curr,int op,int cl,string sh,int n) {
+        if(op==0 && cl==0) {
+            ans.push_back(sh);
             return ;
         }
-        if(op==0) {
-            p("(",op+1,cl,n);
-            return ;
+        if(curr==0) {
+            solve(curr+1,op,cl,sh+'(',n);
+        } else if(curr<op) {
+            solve(curr+1,op,cl,sh+'(',n);
+            solve(curr-1,op-1,cl-1,sh+')',n);
+        } else {
+            solve(curr-1,op-1,cl-1,sh+')',n);
         }
-        if(op==n) {
-            p(h+')',op,cl+1,n);
-            return ;
-        }
-         p(h+'(',op+1,cl,n);
-        if(op>cl)
-         p(h+')',op,cl+1,n);
     }
     vector<string> generateParenthesis(int n) {
-        p("",0,0,n);
-        return v;
+        solve(0,n,n,"",n);
+        return ans;
     }
 };
