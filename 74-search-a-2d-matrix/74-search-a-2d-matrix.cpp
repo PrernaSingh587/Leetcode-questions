@@ -1,31 +1,15 @@
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int n = matrix.size();
-        int m = matrix[0].size();
-        
-		// if matrix have 0 rows or 0 colums
-        if(n == 0 || m == 0)
-            return false;
-        
-		// treating matrix as array just taking care of endices
-		// [0..n*m]
-        int start = 0, end = m*n - 1;
-        
-        while(start <= end)
-        {
-            int mid = start + (end - start) / 2;
-			// a[x] : matrix[x / m][x % m] formulae
-            int ind = matrix[mid/m][mid%m];
-            if (target == ind)
-                return true;
-			// left half
-            else if(target < ind)
-                end = mid - 1;
-            else
-			// right half
-                start = mid + 1;       
+    bool searchMatrix(vector<vector<int>>& mat, int tar) {
+        int m=mat.size(),n=mat[0].size();
+        int i=m-1,j=0;
+        while(i>=0 && j>=0 && i<m && j<n ) {
+            //cout<<mat[i][j]<<" ";
+            if(mat[i][j]>tar) {
+                i--;
+            } else if(mat[i][j]<tar) j++;
+            else return 1;
         }
-        return false;
+        return 0;
     }
 };
