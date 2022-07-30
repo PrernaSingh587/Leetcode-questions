@@ -1,14 +1,15 @@
 class Solution {
 public:
     int findCenter(vector<vector<int>>& ed) {
-        int n=ed.size();
-        int ind[n+2]; memset(ind,0,sizeof(ind));
+        int n=ed.size()+1;
+        int dp[n+1]; memset(dp,0,sizeof(dp));
         for(vector<int>v : ed) {
-            ind[v[0]]++; ind[v[1]]++;
+            dp[v[0]]++;
+            dp[v[1]]++;
         }
-        for(int i=1;i<=n+1;i++) {
-            if(ind[i]!=1) return i;
+        for(int i=1;i<=n;i++) {
+            if(dp[i]==n-1) return i;
         }
-        return 0;
+        return -1;
     }
 };
