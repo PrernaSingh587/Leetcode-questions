@@ -1,20 +1,24 @@
 class Solution {
 public:
-    bool canFinish(int num, vector<vector<int>>& pre) {
-        int c=num,indeg[c]; memset(indeg,0,sizeof(indeg));
-        vector<int>adj[num];
-        for(vector<int>v : pre) { adj[v[1]].push_back(v[0]); indeg[v[0]]++; }
+    bool canFinish(int n, vector<vector<int>>& pr) {
+        vector<int>adj[n];
+        int dp[n]; memset(dp,0,sizeof(dp));
+        for(vector<int>v : pr) {
+            adj[v[0]].push_back(v[1]);
+            dp[v[1]]++;
+        }
         queue<int>q;
-        for(int i=0;i<num;i++) if(indeg[i]==0) q.push(i);
+        for(int i=0;i<n;i++) {
+            if(dp[i]==0) q.push(i);
+        }
+        int c=n;
         while(!q.empty()) {
-            int s=q.size();
-            while(s--) {
-                int k=q.front(); q.pop();
-                c--;
-                for(int h : adj[k]) {
-                    indeg[h]--;
-                    if(indeg[h]==0) q.push(h);
-                }
+            int k=q.front();
+            q.pop();
+            c--;
+            for(int i : adj[k]) {
+                dp[i]--;
+                if(dp[i]==0) q.push(i);
             }
         }
         return c==0;
