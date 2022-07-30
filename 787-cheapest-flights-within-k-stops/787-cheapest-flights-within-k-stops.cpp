@@ -1,31 +1,30 @@
-#define pp vector<int> 
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& fl, int src, int dst, int k) {
+        int cost[n];
+        for(int i=0;i<n;i++) cost[i]=INT_MAX;
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>q;
         vector<vector<int>>adj[n];
-        for(vector<int>v : fl) {
+        for(vector<int>v: fl) {
             adj[v[0]].push_back({v[1],v[2]});
         }
-        int dis[n],stops[n]; 
-        for(int i=0;i<n;i++) {dis[i]=INT_MAX; stops[i]=0;}
-        dis[src]=0; stops[src]=-1;
-        priority_queue<pp,vector<pp>,greater<pp>>q;
-        q.push({0,-1,src});
+        q.push({0,0,src});
+        cost[src]=0;
         while(!q.empty()) {
-            vector<int>v = q.top(); q.pop();
-            int dist=v[0],st=v[1],pos=v[2];
-           
-            if(dis[pos]<dist && stops[pos]<st) {
-                 continue;
-            }  dis[pos]=min(dis[pos],dist);
-            stops[pos]=st;
-            for(vector<int> f : adj[pos]) {
-                
-                    if((st+1)<=k)
-                    q.push({v[0]+f[1],st+1,f[0]});
-                
+            vector<int>v=q.top();
+            q.pop();
+            int x=v[0],y=v[1],z=v[2];
+            
+            if(z==dst) return x;
+            if(y >= k+1) continue;
+            if(cost[z] < y) continue;
+            cost[z]=y;
+            for(vector<int>p : adj[z]) {
+               
+                     q.push({p[1]+x,y+1,p[0]});
+                  
             }
         }
-        return dis[dst]==INT_MAX?-1:dis[dst];
+        return -1;
     }
 };
