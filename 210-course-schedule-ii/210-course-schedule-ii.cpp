@@ -1,31 +1,29 @@
 class Solution {
 public:
-    vector<int> findOrder(int num, vector<vector<int>>& pr) {
-        vector<int>adj[num];
-        int indeg[num]; memset(indeg,0,sizeof(indeg));
+    vector<int> findOrder(int n, vector<vector<int>>& pr) {
+        vector<int>adj[n];
+        vector<int>ans;
+        int dp[n]; memset(dp,0,sizeof(dp));
         for(vector<int>v : pr) {
             adj[v[1]].push_back(v[0]);
-            indeg[v[0]]++;
+            dp[v[0]]++;
         }
         queue<int>q;
-        int c=num;
-        for(int i=0;i<num;i++) {
-            if(indeg[i]==0) q.push(i);
+        for(int i=0;i<n;i++) {
+            if(dp[i]==0) q.push(i);
         }
-         vector<int>v;
+        int c=n;
         while(!q.empty()) {
-            int s=q.size();
-            while(s--) {
-                int k=q.front(); q.pop(); num--;
-                v.push_back(k);
-                for(int h : adj[k]) {
-                    indeg[h]--;
-                    if(indeg[h]==0) q.push(h);
-                }
+            int k=q.front();
+            ans.push_back(k);
+            q.pop();
+            c--;
+            for(int i : adj[k]) {
+                dp[i]--;
+                if(dp[i]==0) q.push(i);
             }
         }
-        if(num!=0) return {};
-        return v;
-        
+        if(c) return {};
+        return ans;
     }
 };
