@@ -1,87 +1,68 @@
 class LRUCache {
 public:
     struct node {
-        int key,val;
+        int val;
         node *next,*prev;
-        node (int k,int v) {
-            key=k;
-            val=v;
-            next=NULL;
-            prev=NULL;
+        node(int val1) {
+            val=val1;
         }
-    }*tail,*head;
+    }*head,*tail;
     int cap;
-    unordered_map<int,node*>mp;
+    unordered_map<int,pair<int,node*>>mp;
+    
     LRUCache(int capacity) {
         cap=capacity;
-        tail=new node(-1,-1);
-        head=new node(-1,-1);
-        tail->prev=head;
+        head=new node(-1);
+        tail=new node(-1);
         head->next=tail;
-    }
-    
-    void add(node *newnode) {
-        node *nextnode=head->next;
-        newnode->next=nextnode;
-        nextnode->prev=newnode;
-        head->next=newnode;
-        newnode->prev=head;
-    }
-    
-    void delete_(node *newnode) {
-        //cout<<newnode->val<<".\n";
-        node *prevnode=newnode->prev;
-        prevnode->next=newnode->next;
-        newnode->next->prev=prevnode;
+        tail->prev=head;
     }
     
     int get(int key) {
-         if(mp.count(key)==0) return -1;
-    node*k = mp[key];
-    int h=k->val;
-    node*pre=k->prev;
-    node*nex=k->next;
-    pre->next=nex;
-    nex->prev=pre;
-    k->next=head->next;
-    k->next->prev=k;
-    head->next=k;
-    k->prev=head;
-    return h;
-       
+        if(mp.count(key)==0) return -1;
+        pair<int,node*>p=mp[key];
+        node *x=p.second;
+        node*prev = x->prev,*next=x->next;
+        prev->next=next;
+        next->prev=prev;
+        node* head_next=head->next;
+        head->next=x;
+        x->prev=head;
+        x->next=head_next;
+        head_next->prev=x;
         
+        return p.first;
     }
     
-    void put(int key, int val) {
-       if(mp.count(key)) {
-         node*k = mp[key];
-    int h=k->val;
-    node*pre=k->prev;
-    node*nex=k->next;
-    pre->next=nex;
-    nex->prev=pre;
-    k->next=head->next;
-     k->next->prev=k;
-    head->next=k;
-    k->prev=head;
-    k->val=val;
-    mp[key]=k;
-    return;
-    } else {
-        if(mp.size()==cap) {
-            node *kl=tail->prev->prev;
-            mp.erase(tail->prev->key);
-            tail->prev=kl;
-            kl->next=tail;
+    void put(int key, int value) {
+        if(mp.count(key)) {
+            pair<int,node*>k=mp[key];
+            mp[key]={value,k.second};
+            node *x=k.second;
+        node*prev = x->prev,*next=x->next;
+        prev->next=next;
+        next->prev=prev;
+        node* head_next=head->next;
+        head->next=x;
+        x->prev=head;
+        x->next=head_next;
+        head_next->prev=x;
+            return;
         }
-        node *newnode = new node(key,val);
-        mp[key]=newnode;
-        newnode->next=head->next;
-        newnode->next->prev=newnode;
-        newnode->prev=head;
-        head->next=newnode;
-    }
-        return ;
+       if(mp.size()==cap) {
+            node *last=tail->prev;
+            mp.erase(last->val);
+         last->prev->next=last->next;
+        last->next->prev=last->prev;
+       }
+            node *x=new node(key);
+            mp[key]={value,x};
+            node* head_next=head->next;
+        head->next=x;
+        x->prev=head;
+        x->next=head_next;
+        head_next->prev=x;
+
     }
 };
 
