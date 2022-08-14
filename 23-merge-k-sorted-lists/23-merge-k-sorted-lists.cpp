@@ -1,5 +1,3 @@
-#define ln ListNode
-
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -10,24 +8,26 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+#define pp pair<int,ListNode*> 
 class Solution {
 public:
-    ListNode* mergeKLists(vector<ListNode*>& ls) {
-        int n=ls.size();
-        ln *dummy=new ln(-1),*ptr=dummy;
-        priority_queue<pair<int,ListNode*>,vector<pair<int,ListNode*>>,greater<pair<int,ListNode*>>>q;
-        for(int i=0;i<n;i++) {
-            if(ls[i])q.push({ls[i]->val,ls[i]});
-        }
-        while(!q.empty()) {
-            pair<int,ListNode*> k=q.top(); q.pop();
-            ListNode* d=k.second;
-            ListNode* s=d->next;
-            ptr->next=d;
-            ptr=ptr->next;
-            ptr->next=NULL;
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        
+        priority_queue<pp,vector<pp>,greater<pp>>q;
+        for(ListNode *s : lists) {
             if(s)
-                q.push({s->val,s});
+            q.push({s->val,s});
+        }
+        ListNode *head=NULL,*dummy=new ListNode(0),*ptr=dummy;
+        while(!q.empty()) {
+            pp k = q.top(); q.pop();
+            ListNode *m=k.second;
+            if(m->next) {
+                q.push({m->next->val,m->next});
+            }
+            m->next=NULL;
+            ptr->next =m;
+            ptr=ptr->next;
         }
         return dummy->next;
     }
