@@ -18,7 +18,7 @@ public:
         }
         
         int maxi=0;
-        for(int i=0;i<v.size();i++) cout<<v[i]<<" ";
+        //for(int i=0;i<v.size();i++) cout<<v[i]<<" ";
         for(int i=1;i<v.size()-1;i++) {
             int l=v[i-1]+1,r=v[i+1]-1;
             maxi=max(maxi,(r-l));
