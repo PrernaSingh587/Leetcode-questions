@@ -11,23 +11,22 @@
  */
 class Solution {
 public:
-   
-    void solve(TreeNode* root, int t, int &ans,int sum, unordered_map<int,int>mp) {
+    int cnt=0;
+    void p(TreeNode* root, int sum, long long int temp, unordered_map<long long int,long long int>mp ) {
         if(!root) return;
-        sum+=root->val;
-        //cout<<root->val<<" "<<sum<<endl;
-        if(mp.count(sum-t)) {
-            ans+=mp[sum-t];
+        int x=root->val;
+        temp+=x;
+        if(mp.count(temp-sum)) {
+            cnt+=mp[temp-sum];
         }
-        mp[sum]++;
-        solve(root->left,t,ans,sum,mp);
-        solve(root->right,t,ans,sum,mp);
+        mp[temp]++;
+        p(root->left,sum,temp,mp);
+        p(root->right,sum,temp,mp);
     }
-    int pathSum(TreeNode* root, int t) {
-        int ans=0;
-         unordered_map<int,int>mp;
-       mp[0]=1;
-        solve(root,t,ans,0,mp);
-        return ans;
+    int pathSum(TreeNode* root, int sum) {
+        unordered_map<long long int,long long int>mp;
+        mp[0]=1;
+        p(root,sum,0,mp);
+        return cnt;
     }
 };
