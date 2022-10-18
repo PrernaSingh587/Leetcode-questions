@@ -1,6 +1,7 @@
 class Solution {
 public:
     map<pair<int,int>,vector<int>>mp;
+    map<pair<int,int>,int>mp1;
     vector<int> p(int i,int j,vector<int>arr) {
         if(i==j) return {arr[i],0};
         if(j-i==1) return {arr[i]*arr[j],arr[i]*arr[j]};
@@ -10,8 +11,17 @@ public:
         for(int k=i;k<j;k++) {
             l=p(i,k,arr); r=p(k+1,j,arr);
             int a=0,b=0;
-            for(int x=i;x<=k;x++) a=max(a,arr[x]);
-            for(int x=k+1;x<=j;x++) b=max(b,arr[x]);
+            if(mp1.count({i,k})) a=mp1[{i,k}]; else {
+                for(int x=i;x<=k;x++) a=max(a,arr[x]);
+                mp1[{i,k}]=a;
+            }
+            if(mp1.count({k+1,j})) b=mp1[{k+1,j}]; 
+            else {
+                for(int x=k+1;x<=j;x++) b=max(b,arr[x]);
+                mp1[{k+1,j}]=b;
+            }
+            
+            
              //cout<<mini<<" "<<l[1]<<" "<<r[1]<<" "<<c<<endl;
             if(mini>l[1]+r[1]+(a*b)) {
                 mini = l[1]+r[1]+(a*b);
