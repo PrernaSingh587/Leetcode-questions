@@ -1,7 +1,6 @@
 # Word Break
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given a string <strong>A </strong>and a dictionary of n words <strong>B</strong>, find out if A&nbsp;can be segmented into a space-separated sequence of dictionary words.</span></p>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given a string <strong>A </strong>and a dictionary of n words <strong>B</strong>, find out if A&nbsp;can be segmented into a space-separated sequence of dictionary words.</span></p>
 
 <p><span style="font-size:18px"><strong>Note:</strong> From the dictionary <strong>B&nbsp;</strong>each word can be taken any number of times and in any order.</span><br>
 <span style="font-size:18px"><strong>Example 1:</strong></span></p>
@@ -50,7 +49,5 @@ Complete&nbsp;<strong>wordBreak()</strong>&nbsp;function which takes a string an
 
 <p><span style="font-size:18px"><strong>Constraints</strong>:<br>
 1 ≤ N ≤ 12<br>
-1 ≤ s ≤ 1100 , where s =&nbsp;length of string A<br>
-&nbsp;The length of each word is less than 15.</span></p>
- <p></p>
-            </div>
+1 ≤ s ≤ 1100 , where s =&nbsp;length of string A</span></p>
+</div>
