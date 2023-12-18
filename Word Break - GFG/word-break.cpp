@@ -1,11 +1,11 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial template for C++
 
 #include <bits/stdc++.h>
 using namespace std;
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function template for C++
 
 // A : given string to search
@@ -14,31 +14,20 @@ using namespace std;
 class Solution
 {
 public:
-    unordered_set<string>st;
-   int solve(string A, int n) {
-       if(n==0) return 0;
-       int dp[n];
-       memset(dp,0,sizeof(dp));
-       string h="";
-       for(int i=0;i<n;i++) {
-           for(int j=0;j<i;j++) {
-             h=A.substr(j+1,i-j);
-             if(st.find(h)!=st.end()) 
-                dp[i]=dp[i]||dp[j];
-             }
-           h=A.substr(0,i+1);
-           if(st.find(h)!=st.end()) dp[i]=1;
-           
-       }
-       return dp[n-1];
-   }
     int wordBreak(string A, vector<string> &B) {
-        for(string h : B) st.insert(h);
-        return solve(A,A.size());
+        int dp[A.size()+1]; memset(dp,0,sizeof(dp));
+        dp[0]=1;
+        unordered_set<string>st(B.begin(),B.end());
+        for(int i=1;i<=A.size();i++) {
+            for(int j=i;j>=1;j--) {
+                dp[i] = dp[i] || (st.find(A.substr(j-1,i-j+1))!=st.end() && dp[j-1]);
+            }
+        }
+        return dp[A.size()];
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main(){
     int t;
@@ -58,4 +47,5 @@ int main(){
         cout<<ob.wordBreak(line, dict)<<"\n";
     }
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
